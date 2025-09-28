@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AKA Studio - Project Summary</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="fabicon.png">
+</head>
+<body class="summary-body">
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Logo" class="logo-image" />
+      <p class="studio-name">AKA Studio</p>
+    </div>
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="summary-main">
+    <h1 class="summary-title">Here’s your project summary</h1>
+    <div class="summary-box">
+      <ul>
+        <li><strong>Full Name:</strong> <span id="summaryFullName" class="highlight"></span></li>
+        <li><strong>Company Name:</strong> <span id="summaryCompanyName" class="highlight"></span></li>
+        <li><strong>Business Type:</strong> <span id="summaryBusinessType" class="highlight"></span></li>
+        <li><strong>Brand Theme:</strong> <span id="summaryBrandTheme" class="highlight"></span></li>
+        <li><strong>Budget:</strong> $<span id="summaryBudget" class="highlight"></span></li>
+        <li><strong>Timeline:</strong> <span id="summaryTimeline" class="highlight"></span></li>
+      </ul>
+      <div class="summary-recommendation">
+        <strong>Design Recommendation:</strong> <span id="summarySuggestion" class="highlight"></span>
+      </div>
+    </div>
+
+    <div class="summary-buttons">
+      <button id="editBtn">Edit</button>
+      <button id="submitBtn">Submit & Save</button>
+    </div>
+  </main>
+
+  <script>
+    // Retrieve data from local storage
+    const fullName = localStorage.getItem('full_name') || 'N/A';
+    const companyName = localStorage.getItem('company_name') || 'N/A';
+    const businessType = localStorage.getItem('business_type') || 'N/A';
+    const brandTheme = localStorage.getItem('brand_theme') || 'N/A';
+    const budget = localStorage.getItem('budget') || 'N/A';
+    const timeline = localStorage.getItem('timeline') || 'N/A';
+    const summary = localStorage.getItem('summary') || 'No suggestion available.';
+
+    // Display data
+    document.getElementById('summaryFullName').innerText = fullName;
+    document.getElementById('summaryCompanyName').innerText = companyName;
+    document.getElementById('summaryBusinessType').innerText = businessType;
+    document.getElementById('summaryBrandTheme').innerText = brandTheme;
+    document.getElementById('summaryBudget').innerText = budget;
+    document.getElementById('summaryTimeline').innerText = timeline;
+    document.getElementById('summarySuggestion').innerText = summary;
+
+    // Edit button goes back
+    document.getElementById('editBtn').onclick = () => window.location.href = 'chat.html';
+
+    // Submit button triggers API call to Flask -> Power Automate -> SharePoint
+    document.getElementById('submitBtn').onclick = () => {
+      fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: fullName,
+          company_name: companyName,
+          business_type: businessType,
+          brand_theme: brandTheme,
+          budget: budget,
+          timeline: timeline,
+          summary: summary
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message || '✔️ Project saved!');
+        window.location.href = 'thankyou.html';
+      })
+      .catch(err => {
+        alert('❌ Failed to save to SharePoint. Please try again.');
+        console.error(err);
+      });
+    };
+  </script>
+</body>
+</html>

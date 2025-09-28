@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AKA Studio - Design Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="fabicon.png">
+</head>
+<body class="chat-body">
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Logo" class="logo-image">
+      <p class="studio-name">AKA Studio</p>
+    </div>
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- ASSISTANT TITLE -->
+  <h2 class="assistant-title">Design Project Assistant</h2>
+
+  <!-- CHAT WINDOW -->
+  <main class="chat-window" id="chatWindow">
+    <div class="bot-bubble">
+      👋 Hi there! I’m your AKA Studio Design Assistant.<br>
+      First, what’s your full name?
+    </div>
+  </main>
+
+  <!-- SUMMARY BUTTON -->
+  <button id="summaryBtn" class="summary-btn" style="display:none;">View Project Summary</button>
+
+  <!-- INPUT AREA -->
+  <footer class="input-area">
+    <input type="text" id="userInput" placeholder="Type your answer here..." />
+    <button id="sendBtn">➜</button>
+  </footer>
+
+  <!-- Load chat logic -->
+  <script src="chat.js"></script>
+</body>
+</html>

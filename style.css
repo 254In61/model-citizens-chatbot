@@ -1,0 +1,384 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* === SHARED === */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Roboto Serif', serif;
+}
+
+header {
+  flex: 0 0 auto;
+  width: 100%;
+  background: #a8dadc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+main {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.studio-name {
+  color: #e63946;
+  font-weight: bold;
+  font-size: 32px;
+  margin: 0;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background: #111;
+}
+
+/* === WELCOME PAGE === */
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  flex: 1;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bot-image,
+.hello-image {
+  width: 420px;
+  height: auto;
+}
+
+.bot-image { margin-left: -80px; }
+.hello-image { margin-right: -80px; }
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headline {
+  margin: 30px 0 10px;
+  font-weight: bold;
+  font-size: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.tagline {
+  margin: 10px 0 30px;
+  font-weight: bold;
+  font-size: 32px;
+  color: #5a189a;
+  position: relative;
+  z-index: 1;
+}
+
+.start-btn {
+  background: #00b4d8;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.start-btn span { margin-right: 8px; }
+.start-btn:hover { background: #0077b6; }
+
+.bg-image {
+  position: fixed;
+  bottom: 0;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.bg1 { left: 0; width: 50%; }
+.bg2 { right: 0; width: 50%; }
+
+/* === CHAT PAGE === */
+.chat-body header {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.assistant-title {
+  text-align: center;
+  font-size: 28px;
+  font-style: italic;
+  margin: 100px 0 10px;
+}
+
+main.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f9fbfd;
+}
+
+.bot-bubble, .user-bubble {
+  max-width: 70%;
+  padding: 12px 18px;
+  border-radius: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.bot-bubble {
+  align-self: flex-start;
+  background: #e0f7fa;
+  color: #004d40;
+  border-radius: 20px 20px 20px 5px;
+}
+
+.user-bubble {
+  align-self: flex-end;
+  background: #bbdefb;
+  color: #0d47a1;
+  border-radius: 20px 20px 5px 20px;
+}
+
+.summary-btn {
+  display: none;
+  margin: 20px auto;
+  padding: 12px 30px;
+  background: #00b4d8;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.summary-btn:hover { background: #0077b6; }
+
+footer.input-area {
+  display: flex;
+  left: 0;
+  padding: 10px 20px;
+  background: #457b9d;
+}
+
+footer.input-area input {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+}
+
+footer.input-area button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+footer.input-area button:hover { color: #a8dadc; }
+
+/* === TYPING BUBBLES === */
+.typing-bubble {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 5px 0;
+  font-style: italic;
+  max-width: 70%;
+}
+
+.bot-typing {
+  align-self: flex-start;
+  background: #e0f7fa; /* Same as bot bubble */
+  color: #004d40;
+  border-radius: 20px 20px 20px 5px;
+}
+
+.user-typing {
+  align-self: flex-end;
+  background: #bbdefb; /* Same as user bubble */
+  color: #0d47a1;
+  border-radius: 20px 20px 5px 20px;
+  text-align: right;
+}
+
+.typing-dots::after {
+  content: '...';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+/* === SUMMARY PAGE === */
+.summary-body {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-body header {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.summary-main {
+  flex: 1;
+  width: 100%;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.summary-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.summary-box {
+  background: #e9f1ff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
+  width: 80%;
+  max-width: 700px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.summary-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary-box li {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.summary-recommendation {
+  margin-top: 15px;
+}
+
+.highlight {
+  color: #0077b6;
+  font-weight: bold;
+}
+
+.summary-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.summary-buttons button {
+  background: #00b4d8;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.summary-buttons button:hover {
+  background: #0077b6;
+}
+
+/* === THANK YOU PAGE === */
+.thankyou-body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.thankyou-main {
+  flex: 1;
+  text-align: center;
+  padding: 100px 20px 40px;
+  box-sizing: border-box;
+}
+
+.thankyou-title { font-size: 35px; }
+.thankyou-text { font-size: 22px; }
+
+.back-btn {
+  background: #00b4d8;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.back-btn:hover { background: #0077b6; }
