@@ -99,13 +99,20 @@ is_valid_phone(phone) → True/False
 
    $ source venv/bin/activate
 
+3. Clone down the repo
+
+   $ git clone -b feature/allan-updates https://github.com/254In61/model-citizens-chatbot.git
+
+4. Install the needed python libraries/packages
+
    $ pip install -r requirements.txt
 
-   $ uvicorn main:app --reload --port 8000 & ## Start FastAPI wrapper
+5. Start FastAPI wrapper
 
-   $ python3 app.py & ## Run Flask server
+   $ uvicorn main:app --reload --port 8000 &
 
+6. Run Flask server
 
-3. Start chat
+   $ python3 app.py & 
 
-   - Visit http://127.0.0.1:5000
+7. Start chat by going to your Web browser and accessing the address : http://127.0.0.1:5000
