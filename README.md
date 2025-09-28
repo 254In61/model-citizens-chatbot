@@ -168,7 +168,7 @@ is_valid_phone(phone) → True/False
 
 4. Open the chat window on your browser : 
    
-   $ http://<ip address of server>:5000
+   $ http://ip_address_of_server:5000
 
    If this is running on your localhost : $ http://127.0.0.1:5000
 
