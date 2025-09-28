@@ -12,6 +12,37 @@ This is Phase 3 of the project whose objectives are :
 
 4. Document "HOW TO" for #2
 
+# Roadmap to Live Website
+
+1. Containerize your chatbot (Dockerfile ready) : Docker or Podman will package the app so it runs anywhere consistently.
+
+2. Test locally on http://localhost:5000 
+
+3. Pick a hosting option (Azure, AWS, DigitalOcean).
+   
+   You have several options to host your chatbot:
+
+   A. Cloud Hosting (Recommended)
+
+    - Azure App Service: Push Docker image → deploy directly → get a public URL.
+    - AWS Elastic Beanstalk / ECS: Similar workflow with Docker support.
+    - Google Cloud Run: Serverless containers → pay per request.
+
+   B. Virtual Machine (VM)
+    - Deploy Ubuntu VM → install Docker → run the container → reverse proxy with Nginx to expose it via HTTPS.
+
+   C. Kubernetes / OpenShift
+    - Overkill for small projects, but good for enterprise scaling.
+
+4. Deploy the Docker image to the hosting platform.
+
+5. Add custom domain + SSL.
+
+   - Use Nginx or your cloud provider’s built-in SSL options.
+   - Point your domain (e.g., chatbot.mycompany.com) → Cloud service → Container port 5000.
+
+6. Open access for users → Done.
+
 # Design Overview
 The tool is designed to : 
 1. builds a Flask-based web chatbot application that captures client information
@@ -125,48 +156,22 @@ is_valid_phone(phone) → True/False
 
    $ sudo apt install -y podman
 
-2. Build image from the Dockerfile 
+2. Pull down the container image from docker.io :
 
-   $ podman build -t model-citizens-chatbot:latest .
+   $ podman pull docker.io/254in61/model-citizens-chatbot:latest
 
 3. Start the backend application
    
-   $ podman run -p 5000:5000 model-citizens-chatbot:latest
+   $ podman run -p 5000:5000 docker.io/254in61/model-citizens-chatbot
 
    *** If having a running application binding the same port : $ kill -9 $(lsof -t -i :5000)
 
 4. Open the chat window on your browser : 
    
-   $ http://127.0.0.1:5000
+   $ http://<ip address of server>:5000
+
+   If this is running on your localhost : $ http://127.0.0.1:5000
+
+   If it is running in a remote server, for example server ip is 192.168.1.98: $ http://192.168.1.98:5000
 
    
-# Roadmap to Live Website
-
-1. Containerize your chatbot (Dockerfile ready) : Docker or Podman will package the app so it runs anywhere consistently.
-
-2. Test locally on http://localhost:5000 
-
-3. Pick a hosting option (Azure, AWS, DigitalOcean).
-   
-   You have several options to host your chatbot:
-
-   A. Cloud Hosting (Recommended)
-
-    - Azure App Service: Push Docker image → deploy directly → get a public URL.
-    - AWS Elastic Beanstalk / ECS: Similar workflow with Docker support.
-    - Google Cloud Run: Serverless containers → pay per request.
-
-   B. Virtual Machine (VM)
-    - Deploy Ubuntu VM → install Docker → run the container → reverse proxy with Nginx to expose it via HTTPS.
-
-   C. Kubernetes / OpenShift
-    - Overkill for small projects, but good for enterprise scaling.
-
-4. Deploy the Docker image to the hosting platform.
-
-5. Add custom domain + SSL.
-
-   - Use Nginx or your cloud provider’s built-in SSL options.
-   - Point your domain (e.g., chatbot.mycompany.com) → Cloud service → Container port 5000.
-
-6. Open access for users → Done.
