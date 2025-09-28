@@ -1,66 +1,111 @@
-# 📌 AKA Studio Design Chatbot — Local LLM Only
+# Summary
 
-This project is a **Client Requirement Collection Chatbot** for AKA Studio.
-It works fully offline with your own **TinyLlama local LLM**.
+A Client Requirement Collection Chatbot for AKA Studio.
+It works fully offline with your own TinyLlama local LLM.
 
----
+This is Phase 3 of the project whose objectives are : 
+1. Take Phase 2 build and deploy in testing site/environment where customer has access to it.
 
-## 🚀 What’s Inside?
+2. Save chatbot data to an external server for analysis.
 
-✅ **Flask backend** (`app.py`): Matches client input to your design dataset, generates a friendly suggestion using your own LLM.  
-✅ **FastAPI wrapper** (`main.py`): Wraps your TinyLlama running in Ollama.  
-✅ **Frontend pages**: `index.html`, `chat.html`, `summary.html`, `thankyou.html`.  
-✅ **Dataset**: `aka_studio_designs.xlsx`.
+3. Document "HOW TO" for #1.
 
----
+4. Document "HOW TO" for #2
 
-## ✅ 1️⃣ Requirements
+# Design Overview
+The tool is designed to : 
+1. builds a Flask-based web chatbot application that captures client information
 
-- Python 3.9+
-- pip
-- ~3GB RAM
-- [Ollama installed](https://ollama.com/download)
+2. manages conversation flow
 
----
+3. validates inputs (email, phone)
 
-## ✅ 2️⃣ Install dependencies
+4. saves client data to CSV
 
-```bash
-pip install -r requirements.txt
-```
+5. uploads it to SharePoint via PowerShell
 
----
+6. stores chat logs for recordkeeping.
 
-## ✅ 3️⃣ Pull TinyLlama
+# Python Packages/Libraries
+1. Flask: For creating the web interface and handling HTTP requests.
 
-```bash
-ollama pull tinyllama
-```
+2. ChatterBot: A chatbot library for training and responding to user input.
 
----
+3. CSV, JSON, OS, Subprocess:
+    - JSON: Loads predefined training data for chatbot conversations.
+    - CSV: Stores client information.
+    - Subprocess: Runs PowerShell scripts to upload data to SharePoint.
 
-## ✅ 4️⃣ Run TinyLlama
+4. Datetime & Pytz: Track session timeout and timestamps for chat logs.
 
-```bash
-ollama run tinyllama
-```
+5. Regex (re): Validates email and phone number inputs.
 
----
+# Chatbot Initialization
 
-## ✅ 5️⃣ Start FastAPI wrapper
+chatbot = ChatBot(
+    "AKABot",
+    storage_adapter="chatterbot.storage.SQLStorageAdapter",
+    logic_adapters=["chatterbot.logic.BestMatch", "chatterbot.logic.MathematicalEvaluation"]
+)
 
-```bash
-uvicorn main:app --reload --port 8000
-```
+- SQLStorageAdapter: Stores chatbot conversations in a database.
+- BestMatch: Finds the best-matching response to user queries.
+- MathematicalEvaluation: Allows solving simple math problems.
 
----
+Training data is loaded from cb_training_data.json, then fed into ListTrainer.
 
-## ✅ 6️⃣ Run Flask server
+# Client Data Handling
+save_client_data(client_data)
 
-```bash
-python app.py
-```
+- Saves user data (name, company, role, email, phone, project_description) to client_data.csv.
 
-Visit [http://127.0.0.1:5000](http://127.0.0.1:5000)
+- Uses a fixed field order for consistency.
 
-✅ **No Gemini needed — fully offline, local LLM-powered!**
+- Calls a PowerShell script (MgGraph.ps1) to upload this data to SharePoint.
+
+save_chat_log(chat_log, client_data)
+
+- Stores chat history in a timestamped text file named with the client’s name.
+  Example: chat_log_John_Smith_20250923_143000.txt
+
+
+# Input Validation
+
+- Email: Must match a basic user@domain.com pattern.
+- Phone: Must be 9–15 digits, optionally starting with +.
+
+is_valid_email(email) → True/False
+is_valid_phone(phone) → True/False
+
+# How to Run - Locally on your machine
+
+1. Install ollama 
+
+   $ cd /tmp
+
+   $ wget https://github.com/ollama/ollama/releases/latest/download/ollama-linux-amd64.tgz
+   
+   $ sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+
+   $ ollama --version
+
+   $ ollama serve
+
+2. Run api 
+   
+   $ sudo apt install -y python3.12-venv
+
+   $ python3 -m venv venv
+
+   $ source venv/bin/activate
+
+   $ pip install -r requirements.txt
+
+   $ uvicorn main:app --reload --port 8000 & ## Start FastAPI wrapper
+
+   $ python3 app.py & ## Run Flask server
+
+
+3. Start chat
+
+   - Visit http://127.0.0.1:5000
