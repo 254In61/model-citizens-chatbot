@@ -150,28 +150,8 @@ is_valid_phone(phone) → True/False
 
 7. Start chat by going to your Web browser and accessing the address : http://127.0.0.1:5000
 
-## Docker/Podman Image
 
-1. Install podman on your linux machine
+## Running using docker container image.
 
-   $ sudo apt install -y podman
-
-2. Pull down the container image from docker.io :
-
-   $ podman pull docker.io/254in61/model-citizens-chatbot:latest
-
-3. Start the backend application
-   
-   $ podman run -p 5000:5000 docker.io/254in61/model-citizens-chatbot
-
-   *** If having a running application binding the same port : $ kill -9 $(lsof -t -i :5000)
-
-4. Open the chat window on your browser : 
-   
-   $ http://ip_address_of_server:5000
-
-   If this is running on your localhost : $ http://127.0.0.1:5000
-
-   If it is running in a remote server, for example server ip is 192.168.1.98: $ http://192.168.1.98:5000
-
+REF:  docker-image/README.md
    
